@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Function to display help message
+show_help() {
+    echo "Usage: $(basename "$0") [-h] [FILE]"
+    echo "Options:"
+    echo "  -h  Display this help message"
+}
+
+# Parse options
+while getopts ":h" opt; do
+    case ${opt} in
+        h ) # Display help message
+            show_help
+            exit 0
+            ;;
+        \? ) # Invalid option
+            echo "Invalid option: $OPTARG" 1>&2
+            show_help
+            exit 1
+            ;;
+        : ) # Missing argument
+            echo "Option -$OPTARG requires an argument" 1>&2
+            show_help
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND -1))
+
+# Main script logic
+echo "Performing some action with file: $1"
